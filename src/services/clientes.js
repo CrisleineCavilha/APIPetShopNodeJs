@@ -1,7 +1,7 @@
-const repositorioPetShop = require('../repositories/petshop.js');
-const repositorio = new repositorioPetShop();
+const repositorioClientes = require('../repositories/clientes.js');
+const repositorio = new repositorioClientes();
 
-class servicoPetShop {
+class servicoClientes {
 
     VerificarCliente(cliente) {
         if(!cliente){
@@ -11,17 +11,21 @@ class servicoPetShop {
         } else if(!cliente.telefone){
             throw new Error('Não foi enviado o número de telefone do cliente');
         } 
+        const resultadoTelefone = repositorio.ConsultarTodos(cliente.telefone)
+        if(resultadoTelefone == cliente.telefone ) {
+            throw new Error("Esse telefone já foi cadastrado.");
+        } 
         return true;
     }
 
     async ConsultarUm(id) {
         if(isNaN(id)) {
-            return {message: "Favor informar o ID apenas com número."};
-        }
+            throw new Error("Favor informar o ID apenas com número.");
+        } 
         const resultadoId = repositorio.ConsultarUm(id)
         console.log(resultadoId)
-        if(resultadoId == null ) {
-            return {message: "Esse ID não foi encontrado"};
+        if(resultadoId == null) {
+            throw new Error("Esse ID não foi encontrado");
         } else {
             return resultadoId;
         }
@@ -49,7 +53,7 @@ class servicoPetShop {
     }
 }
 
-module.exports = servicoPetShop
+module.exports = servicoClientes
 
 
 

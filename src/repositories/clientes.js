@@ -1,8 +1,10 @@
-const Cliente = require('../models/petshop.js');
+const Cliente = require('../models/clientes.js');
+const Cachorro = require('../models/cachorros.js');
 
-class repositorioPetShop {
+class repositorioClientes {
     
     async ConsultarUm(id) {
+        this.ListarCachorros(Cliente)
         return Cliente.findOne({
             where: {id}
         });
@@ -24,7 +26,6 @@ class repositorioPetShop {
         const result = await Cliente.update(cliente, {
             where: {id}
         })
-        console.log(result);
         return result;
     }
 
@@ -33,9 +34,15 @@ class repositorioPetShop {
             where: { id }
         });
     }
+
+    async ListarCachorros() {
+        const cliente = await Cliente.findByPk(1, {include: Cachorro});
+        return (cliente.cachorro.nome);
+        
+    }
 }
 
-module.exports = repositorioPetShop
+module.exports = repositorioClientes
 
 
 

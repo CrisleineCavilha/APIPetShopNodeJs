@@ -1,14 +1,14 @@
-const servicoPetShop = require('../services/petshop');
-const servico = new servicoPetShop();
+const servicoCachorros = require('../services/cachorros.js');
+const servico = new servicoCachorros();
 
-class controllerPetShop {
+class controllerCachorros {
 
     async ConsultarUm(req, res) {
         try {
             console.log(req.params.id);
             const result = await servico.ConsultarUm(req.params.id);
             res.status(200).json({
-                cliente: result     
+                cachorro: result     
             })
         } catch(error) {
             console.log(error);
@@ -22,40 +22,40 @@ class controllerPetShop {
         try {
             const result = await servico.ConsultarTodos();
             res.status(200).json({
-                clientes: result
+                cachorros: result
             })
         } catch(error) {
             console.log(error);
             res.status(500).json({
-                message: "Erro ao listar clientes."
+                message: "Erro ao listar cachorros."
             })
         }
     }
 
     async Create(req, res) {
         try {
-            const result = await servico.Create(req.body.cliente);
+            const result = await servico.Create(req.body.cachorro);
             res.status(201).json({
-                cliente: result
+                cachorro: result
             })
         } catch(error) {
             console.log(error);
             res.status(500).json({
-                message: "Erro ao cadastrar cliente."
+                message: error.message
             })
         }
     }
 
     async Update(req, res) {
         try {
-            const result = await servico.Update(req.params.id, req.body.cliente);
+            const result = await servico.Update(req.params.id, req.body.cachorro);
             res.status(200).json({
-                cliente: result
+                message: "Cadastro alterado com Sucesso."
             })
         } catch(error) {
             console.log(error);
             res.status(500).json({
-                message: "Erro ao alterar cadastro de cliente."
+                message: error.message
             })
         }
     }
@@ -63,14 +63,17 @@ class controllerPetShop {
     async Delete(req, res) {
         try {
             await servico.Delete(req.params.id);
-            res.status(204)
+            res.status(200).json({
+                message: "Cadastro excluído com Sucesso."
+            })
         } catch(error) {
             console.log(error);
             res.status(500).json({
-                message: "Erro ao deletar cadastro de cliente."
+                message: "Erro ao deletar cadastro de cachorro."
             })
         }
     }
+
 } 
 
-module.exports = controllerPetShop
+module.exports = controllerCachorros

@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const conexao = require('../database.js');
 
 const Cliente = conexao.define('clientes', {
-    id: {
+    idCliente: {
         primaryKey: true,
         autoIncrement: true,
         type: DataTypes.INTEGER
@@ -14,7 +14,9 @@ const Cliente = conexao.define('clientes', {
     telefone: {
         type: DataTypes.STRING,
         allowNull: false,
-    }
+        unique: true
+    },
+    
 }, {
     createdAt: false,
     updatedAt: false
