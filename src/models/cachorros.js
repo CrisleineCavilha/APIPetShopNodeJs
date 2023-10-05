@@ -8,13 +8,12 @@ const Cachorro = conexao.define('cachorros', {
         autoIncrement: true,
         type: DataTypes.INTEGER
     },
-    idCliente: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
     nome: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    idCliente: {
+        type: DataTypes.STRING,
     },
     raca: {
         type: DataTypes.STRING,

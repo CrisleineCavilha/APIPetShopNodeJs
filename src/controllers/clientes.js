@@ -5,8 +5,8 @@ class controllerClientes {
 
     async ConsultarUm(req, res) {
         try {
-            console.log(req.params.id);
-            const result = await servico.ConsultarUm(req.params.id);
+            console.log(req.params.idCliente);
+            const result = await servico.ConsultarUm(req.params.idCliente);
             res.status(200).json({
                 cliente: result     
             })
@@ -48,7 +48,7 @@ class controllerClientes {
 
     async Update(req, res) {
         try {
-            const result = await servico.Update(req.params.id, req.body.cliente);
+            const result = await servico.Update(req.params.idCliente, req.body.cliente);
             res.status(200).json({
                 message: "Cadastro alterado com Sucesso."
             })
@@ -62,7 +62,7 @@ class controllerClientes {
 
     async Delete(req, res) {
         try {
-            await servico.Delete(req.params.id);
+            await servico.Delete(req.params.idCliente);
             res.status(204).json({
                 message: "Cadastro excluído com Sucesso."
             })

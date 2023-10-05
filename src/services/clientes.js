@@ -18,11 +18,11 @@ class servicoClientes {
         return true;
     }
 
-    async ConsultarUm(id) {
-        if(isNaN(id)) {
+    async ConsultarUm(idCliente) {
+        if(isNaN(idCliente)) {
             throw new Error("Favor informar o ID apenas com número.");
         } 
-        const resultadoId = repositorio.ConsultarUm(id)
+        const resultadoId = repositorio.ConsultarUm(idCliente)
         console.log(resultadoId)
         if(resultadoId == null) {
             throw new Error("Esse ID não foi encontrado");
@@ -40,16 +40,16 @@ class servicoClientes {
         return repositorio.Create(cliente);
     }
 
-    async Update(id, cliente) {
-        if(!id) {
+    async Update(idCliente, cliente) {
+        if(!idCliente) {
             throw new Error('Não foi enviado o identificador do cliente para alterar.');
         }
         this.VerificarCliente(cliente);
-        return repositorio.Update(id, cliente);
+        return repositorio.Update(idCliente, cliente);
     }
 
-    async Delete(id) {
-        return repositorio.Delete(id);
+    async Delete(idCliente) {
+        return repositorio.Delete(idCliente);
     }
 }
 

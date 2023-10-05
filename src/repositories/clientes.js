@@ -3,10 +3,10 @@ const Cachorro = require('../models/cachorros.js');
 
 class repositorioClientes {
     
-    async ConsultarUm(id) {
-        this.ListarCachorros(Cliente)
+    async ConsultarUm(idCliente) {
         return Cliente.findOne({
-            where: {id}
+            where: { idCliente }, 
+            include: [Cachorro]
         });
     }
 
@@ -22,24 +22,20 @@ class repositorioClientes {
         return result;
     }
  
-    async Update(id, cliente) {
+    async Update(idCliente, cliente) {
         const result = await Cliente.update(cliente, {
-            where: {id}
+            where: {idCliente}
         })
         return result;
     }
 
-    async Delete(id) {
+    async Delete(idCliente) {
         return Cliente.destroy({
-            where: { id }
+            where: { idCliente }
         });
     }
 
-    async ListarCachorros() {
-        const cliente = await Cliente.findByPk(1, {include: Cachorro});
-        return (cliente.cachorro.nome);
-        
-    }
+    
 }
 
 module.exports = repositorioClientes
