@@ -13,7 +13,7 @@ const Cachorro = conexao.define('cachorros', {
         allowNull: false
     },
     idCliente: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
     },
     raca: {
         type: DataTypes.STRING,

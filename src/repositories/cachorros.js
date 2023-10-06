@@ -1,11 +1,13 @@
 const Cachorro = require('../models/cachorros.js');
+const Atendimento = require('../models/atendimentos.js');
 
 
 class repositorioCachorros{
     
     async ConsultarUm(id) {
         return Cachorro.findOne({
-            where: {id}
+            where: {id},
+            include: [Atendimento]
         });
     }
 
@@ -32,8 +34,7 @@ class repositorioCachorros{
         return Cachorro.destroy({
             where: { id }
         });
-    }
-            
+    }        
     
 }
 

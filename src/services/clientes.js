@@ -11,10 +11,6 @@ class servicoClientes {
         } else if(!cliente.telefone){
             throw new Error('Não foi enviado o número de telefone do cliente');
         } 
-        const resultadoTelefone = repositorio.ConsultarTodos(cliente.telefone)
-        if(resultadoTelefone == cliente.telefone ) {
-            throw new Error("Esse telefone já foi cadastrado.");
-        } 
         return true;
     }
 
