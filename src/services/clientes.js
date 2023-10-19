@@ -17,14 +17,10 @@ class servicoClientes {
     async ConsultarUm(idCliente) {
         if(isNaN(idCliente)) {
             throw new Error("Favor informar o ID apenas com número.");
-        } 
-        const resultadoId = repositorio.ConsultarUm(idCliente)
-        console.log(resultadoId)
-        if(resultadoId == null) {
-            throw new Error("Esse ID não foi encontrado");
-        } else {
-            return resultadoId;
+        } else if (!idCliente) {
+            throw new Error('Não foi enviado o identificador do cliente para consultar.');
         }
+        return repositorio.ConsultarUm(idCliente)
     }
 
     async ConsultarTodos() {

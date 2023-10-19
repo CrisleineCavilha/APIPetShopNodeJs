@@ -21,14 +21,10 @@ class servicoAtendimentos {
     async ConsultarUm(idAtendimento) {
         if(isNaN(idAtendimento)) {
             throw new Error("Favor informar o ID apenas com número.");
-        } 
-        const resultadoIdAtendimento = repositorio.ConsultarUm(idAtendimento)
-        console.log(resultadoIdAtendimento)
-        if(resultadoIdAtendimento == null) {
-            throw new Error("Esse ID não foi encontrado");
-        } else {
-            return resultadoIdAtendimento;
+        } else if(!idAtendimento) {
+            throw new Error('Esse verificador não existe.');
         }
+        return repositorio.ConsultarUm(idAtendimento)
     }
 
     async ConsultarTodos() {
