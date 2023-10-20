@@ -7,6 +7,9 @@ const Cliente = conexao.define('clientes', {
         autoIncrement: true,
         type: DataTypes.INTEGER
     },
+    idUsuario: {
+        type: DataTypes.INTEGER,
+    },    
     nome: {
         type: DataTypes.STRING,
         allowNull: false

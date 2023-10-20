@@ -1,5 +1,6 @@
 const Cliente = require('../models/clientes.js');
 const Cachorro = require('../models/cachorros.js');
+const Usuario = require('../models/usuarios.js');
 
 class repositorioClientes {
     
@@ -18,6 +19,7 @@ class repositorioClientes {
     async Create(cliente) {
         console.log(cliente)
         const result = await Cliente.create(cliente);
+        const result = await Usuario.create();
         console.log(result);
         return result;
     }

@@ -1,15 +1,16 @@
 const express = require('express');
 const controllerClientes = require('../controllers/clientes.js');
+const authMiddleware = require('../middleware/auth')
 
 const controller = new controllerClientes();
 
 const router = express.Router();
 
-router.get('/api/cliente/:idCliente', controller.ConsultarUm);
-router.get('/api/cliente', controller.ConsultarTodos);
-router.post('/api/cliente', controller.Create);
-router.put('/api/cliente/:idCliente', controller.Update);
-router.delete('/api/cliente/:idCliente', controller.Delete);
+router.get('/api/cliente/:idCliente', authMiddleware, controller.ConsultarUm);
+router.get('/api/cliente',authMiddleware, controller.ConsultarTodos);
+router.post('/api/cliente',authMiddleware, controller.Create);
+router.put('/api/cliente/:idCliente',authMiddleware, controller.Update);
+router.delete('/api/cliente/:idCliente',authMiddleware,controller.Delete);
 
 
 module.exports = router

@@ -9,9 +9,6 @@ const Usuario = conexao.define('usuarios', {
         autoIncrement: true,
         type: DataTypes.INTEGER
     },
-    idCliente: {
-        type: DataTypes.INTEGER,
-    },
     email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -21,6 +18,11 @@ const Usuario = conexao.define('usuarios', {
         type: DataTypes.STRING,
         allowNull: false,        
     },
+    Permissao: {
+        type: DataTypes.INTEGER,
+        unique: true
+    },
+
 }, {
     createdAt: false,
     updatedAt: false
@@ -33,9 +35,9 @@ No segundo parâmetro é um objeto com as características desse relacionamento.
 constraint para garantir a relação e criar a chave estrangeira.*/
 
 // 1 usuário para 1 cliente
-Usuario.belongsTo(Cliente, { 
+Cliente.belongsTo(Usuario, { 
     constraint: true, 
-    foreignKey: 'idCliente' //nome da chave estrangeira
+    foreignKey: 'idUsuario' //nome da chave estrangeira
 })
 
 module.exports = Usuario

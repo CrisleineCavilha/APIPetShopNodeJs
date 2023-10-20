@@ -1,5 +1,5 @@
 const express = require('express')
-const ControllerUsuario = require('../controllers/usuarios')
+const ControllerAtendentes = require('../controllers/usuarios')
 const authMiddleware = require('../middleware/auth')
 
 const controller = new ControllerUsuario()

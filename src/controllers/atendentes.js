@@ -1,14 +1,14 @@
-const servicoCachorros = require('../services/cachorros.js');
-const servico = new servicoCachorros();
+const servicoAtendentes = require('../services/atendentes.js');
+const servico = new servicoAtendentes();
 
-class controllerCachorros {
+class controllerAtendentes {
 
     async ConsultarUm(req, res) {
         try {
-            console.log(req.params.id);
-            const result = await servico.ConsultarUm(req.params.id);
+            console.log(req.params.idUsuario);
+            const result = await servico.ConsultarUm(req.params.idUsuario);
             res.status(200).json({
-                cachorro: result     
+                atendente: result     
             })
         } catch(error) {
             console.log(error);
@@ -22,21 +22,21 @@ class controllerCachorros {
         try {
             const result = await servico.ConsultarTodos();
             res.status(200).json({
-                cachorros: result
+                atendentes: result
             })
         } catch(error) {
             console.log(error);
             res.status(500).json({
-                message: "Erro ao listar cachorros."
+                message: error.message
             })
         }
     }
 
     async Create(req, res) {
         try {
-            const result = await servico.Create(req.body.cachorro);
+            const result = await servico.Create(req.body.usuario);
             res.status(201).json({
-                cachorro: result
+                atendente: result
             })
         } catch(error) {
             console.log(error);
@@ -48,7 +48,7 @@ class controllerCachorros {
 
     async Update(req, res) {
         try {
-            const result = await servico.Update(req.params.id, req.body.cachorro);
+            const result = await servico.Update(req.params.idUsuario, req.body.usuario);
             res.status(200).json({
                 message: "Cadastro alterado com Sucesso."
             })
@@ -62,18 +62,17 @@ class controllerCachorros {
 
     async Delete(req, res) {
         try {
-            await servico.Delete(req.params.id);
+            await servico.Delete(req.params.idUsuario);
             res.status(200).json({
-                message: "Cadastro de cachorro excluído com Sucesso."
+                message: "Cadastro excluído com Sucesso."
             })
         } catch(error) {
             console.log(error);
             res.status(500).json({
-                message: "Erro ao deletar cadastro de cachorro."
+                message: "Erro ao deletar cadastro de cliente."
             })
         }
     }
-
 } 
 
-module.exports = controllerCachorros
+module.exports = controllerAtendentes

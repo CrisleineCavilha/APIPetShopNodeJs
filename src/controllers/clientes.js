@@ -5,7 +5,7 @@ class controllerClientes {
 
     async ConsultarUm(req, res) {
         try {
-            console.log(req.params.idCliente);
+            console.log(req.session.permissao)
             const result = await servico.ConsultarUm(req.params.idCliente);
             res.status(200).json({
                 cliente: result     
@@ -63,7 +63,7 @@ class controllerClientes {
     async Delete(req, res) {
         try {
             await servico.Delete(req.params.idCliente);
-            res.status(204).json({
+            res.status(200).json({
                 message: "Cadastro excluído com Sucesso."
             })
         } catch(error) {

@@ -13,10 +13,10 @@ class controllerUsuarios {
         const { email, senha } = req.body;
 
         //Verificação se foi informado email e senha.
-        if(!email || !senha){
+        if(!email || !senha ){
             return res.status(401).json({ message: "E-mail ou senha inválido" });
         }
-
+        console.log(email)
         // dataValues: usuario é usado para ter acesso a todas as informações do objeto usuario.
         const { dataValues: usuario } = await servico.ConsultarUmPorEmail(email)
 
@@ -30,18 +30,17 @@ class controllerUsuarios {
             console.log('erro2')
             return res.status(401).json({ message: "E-mail ou senha inválido" });
         }
-
+                   console.log(usuario)      
         const token = jwt.sign( // o jwt serve para autenticar o login do usuário.
-            { idUsuario: usuario.idUsuario, email: usuario.email},
-            config.secrect // o secret é a chave que encontra-se la em config.js
+            { idUsuario: usuario.idUsuario, email: usuario.email, permissao: usuario.Permissao},
+            config.secret // o secret é a chave que encontra-se la em config.js
         )
 
-        res.json({ token })
+        res.json({ token })             
     }
 
     async ConsultarUm(req, res){
         try {
-            console.log(req.params.idUsuario)
             const result = await servico.ConsultarUm(req.params.idUsuario)
             res.status(200).json({
                 usuario: result
@@ -80,7 +79,7 @@ class controllerUsuarios {
         try {
             const result = await servico.Update(req.params.idUsuario, req.body.usuario)
             res.status(200).json({
-                usuario: result
+                message: "Cadastro alterado com Sucesso."
             })
         } catch (error) {
             console.log(error)
@@ -91,10 +90,14 @@ class controllerUsuarios {
     async Delete(req, res){
         try {
             await servico.Delete(req.params.idUsuario)
-            res.status(204)
+            res.status(200).json({
+                message: "Usuário excluído com Sucesso."
+            })
         } catch (error) {
             console.log(error)
-            res.status(500).json({ message: error })
+            res.status(500).json({
+                message: "Erro ao deletar usuário."
+            })
         }
     }
 }
