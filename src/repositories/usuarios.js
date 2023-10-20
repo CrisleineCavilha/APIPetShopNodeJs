@@ -1,5 +1,4 @@
 const Usuario = require('../models/usuarios.js')
-const bcrypt = require('bcrypt')
 
 class RepositorieUsuarios {
 
@@ -20,17 +19,6 @@ class RepositorieUsuarios {
         return Usuario.findAll();
     }
 
-    async Create(usuario, transaction) {
-        const hashSenha = await bcrypt.hash(usuario.senha, 10)
-
-        const result = await Usuario.create(
-            { ...usuario, senha: hashSenha },
-        // ...usuario significa explodir o que tem dentro do objeto usuario. Depois utiliza-se senha: hashSenha para criar apenas a senha.
-            { transaction }
-        )
-        return result
-    }
-
     async Update(idUsuario, usuario) {
         const result = await Usuario.update(usuario, {
             where: {
@@ -41,11 +29,11 @@ class RepositorieUsuarios {
         return result
     }
 
-    async Delete(idUsuario) {
-        return Usuario.destroy({
-            where: { idUsuario }
-        });
-    }
+    // async Delete(idUsuario) {
+    //     return Usuario.destroy({
+    //         where: { idUsuario }
+    //     });
+    // }
 
 }
 

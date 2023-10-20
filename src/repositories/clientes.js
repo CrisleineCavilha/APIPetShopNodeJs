@@ -1,6 +1,7 @@
 const Cliente = require('../models/clientes.js');
 const Cachorro = require('../models/cachorros.js');
 const Usuario = require('../models/usuarios.js');
+const bcrypt = require('bcrypt')
 
 class repositorioClientes {
     
@@ -16,12 +17,17 @@ class repositorioClientes {
     }
 
 
-    async Create(cliente) {
-        console.log(cliente)
+    async Create(cliente, senha, usuario, transaction) {
+       
         const result = await Cliente.create(cliente);
-        const result = await Usuario.create();
-        console.log(result);
-        return result;
+        const hashSenha = await bcrypt.hash(senha, 10)
+
+        const result1 = await Usuario.create(
+            { ...usuario, senha: hashSenha },
+            {transaction}
+        )
+        return true
+        
     }
  
     async Update(idCliente, cliente) {
@@ -31,13 +37,23 @@ class repositorioClientes {
         return result;
     }
 
-    async Delete(idCliente) {
-        return Cliente.destroy({
-            where: { idCliente }
-        });
-    }
-
+    async Delete(idCliente, idUsuario) {
+        try {
+            const cliente =  Cliente.destroy({
+                where: { idCliente }
+            })
+            const usuario =  Usuario.destroy({
+                where: { idUsuario }
+            })
+            return true
+        } catch(error) {
+            console.log(error)
+            return false          
+        }
     
+
+    }
+        
 }
 
 module.exports = repositorioClientes

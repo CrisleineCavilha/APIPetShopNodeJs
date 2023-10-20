@@ -63,18 +63,6 @@ class controllerUsuarios {
         }
     }
 
-    async Create(req, res){
-        try {
-            const result = await servico.Create(req.body.usuario)
-            res.status(201).json({
-                usuario: result
-            })
-        } catch (error) {
-            console.log(error)
-            res.status(500).json({ message: error })
-        }
-    }
-
     async Update(req, res){
         try {
             const result = await servico.Update(req.params.idUsuario, req.body.usuario)
