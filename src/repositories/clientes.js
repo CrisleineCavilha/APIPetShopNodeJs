@@ -5,6 +5,14 @@ const bcrypt = require('bcrypt')
 
 class repositorioClientes {
     
+
+    async ConsultarUmPorEmail(email) {
+        return Usuario.findOne({
+            where: { email }
+        });
+    }
+
+
     async ConsultarUm(idCliente, transaction) {
         return Cliente.findOne({
             where: { idCliente }, 
@@ -28,44 +36,30 @@ class repositorioClientes {
         }, {transaction});
 
         const { dataValues: resultCliente} = await Cliente.create(
-            { usuarioId: resultUsuario.id, nome: cliente.nome, telefone: cliente.telefone },
+            { usuarioId: resultUsuario.idUsuario, nome: cliente.nome, telefone: cliente.telefone },
             {transaction}
         )             
         return {...resultCliente, ...resultUsuario };
     }
- 
-    async Update(idCliente, cliente, transaction) {
-        const { dataValues: resultUsuario } = await Usuario.update({
-            email: cliente.email,
-            senha: await bcrypt.hash(cliente.senha, 10)},
-            {where: {idCliente}},
-            {transaction});
 
-        const { dataValues: resultCliente} = await Cliente.create(
-             {usuarioId: resultUsuario.id, nome: cliente.nome, telefone: cliente.telefone},
-             {where: {idCliente}},
-             {transaction}
-        )             
-        return {...resultCliente, ...resultUsuario };
+   
+    async Update(idCliente, cliente) {
+        await Cliente.update(cliente, {
+            where: {
+                idCliente
+            }
+        })
+        return Cliente.findOne({
+            where: { idCliente }
+        })
     }
-    
-    async Delete(idCliente, idUsuario) {
-        try {
-            Cliente.destroy({
-                where: { idCliente }
-            })
-            Usuario.destroy({
-                where: { idUsuario }
-            })
-            return true
 
-        } catch(error) {
-            console.log(error)
-            return false          
-        }
     
-
-    }
+    async Delete(idCliente) {
+        return Cliente.destroy({
+            where: { idCliente }
+        });       
+    }   
         
 }
 

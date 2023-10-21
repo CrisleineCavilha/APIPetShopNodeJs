@@ -3,39 +3,11 @@ const servico = new servicoAtendentes();
 
 class controllerAtendentes {
 
-    async ConsultarUm(req, res) {
-        try {
-            console.log(req.params.idUsuario);
-            const result = await servico.ConsultarUm(req.params.idUsuario);
-            res.status(200).json({
-                atendente: result     
-            })
-        } catch(error) {
-            console.log(error);
-            res.status(500).json({
-                message: error.message
-            })
-        }
-    }
-
-    async ConsultarTodos(req, res) {
-        try {
-            const result = await servico.ConsultarTodos();
-            res.status(200).json({
-                atendentes: result
-            })
-        } catch(error) {
-            console.log(error);
-            res.status(500).json({
-                message: error.message
-            })
-        }
-    }
-
     async Create(req, res) {
         try {
-            const result = await servico.Create(req.body.usuario);
-            res.status(201).json({
+            req.session.permissao
+            const result = await servico.Create(req.body.atendente);
+            res.status(200).json({
                 atendente: result
             })
         } catch(error) {
@@ -48,9 +20,9 @@ class controllerAtendentes {
 
     async Update(req, res) {
         try {
-            const result = await servico.Update(req.params.idUsuario, req.body.usuario);
+            const result = await servico.Update(req.params.idUsuario, req.body.atendente);
             res.status(200).json({
-                message: "Cadastro alterado com Sucesso."
+                atendente: result
             })
         } catch(error) {
             console.log(error);
@@ -62,14 +34,14 @@ class controllerAtendentes {
 
     async Delete(req, res) {
         try {
-            await servico.Delete(req.params.idUsuario);
+            servico.Delete(req.params.idUsuario);
             res.status(200).json({
-                message: "Cadastro excluído com Sucesso."
+                message: "Usuário (Atendente) excluído com Sucesso."
             })
         } catch(error) {
             console.log(error);
             res.status(500).json({
-                message: "Erro ao deletar cadastro de cliente."
+                message: "Erro ao deletar cadastro de usuário."
             })
         }
     }

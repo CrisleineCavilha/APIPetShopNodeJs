@@ -19,15 +19,15 @@ const Usuario = conexao.define('usuarios',
         type: DataTypes.STRING,
         allowNull: false,        
     },
-    Permissao: {
-        type: DataTypes.INTEGER,
-        unique: true
+    permissao: {
+        type: DataTypes.INTEGER,           
     },
 
 }, {
     createdAt: false,
     updatedAt: false
 });
+
 
 
 module.exports = Usuario
