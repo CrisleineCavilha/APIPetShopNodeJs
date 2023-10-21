@@ -17,7 +17,7 @@ class controllerUsuarios {
             return res.status(401).json({ message: "E-mail ou senha inválido" });
         }
         console.log(email)
-        // dataValues: usuario é usado para ter acesso a todas as informações do objeto usuario.
+        //dataValues: usuario é usado para ter acesso a todas as informações do objeto usuario.
         const { dataValues: usuario } = await servico.ConsultarUmPorEmail(email)
 
         if(!usuario) {
@@ -30,7 +30,7 @@ class controllerUsuarios {
             console.log('erro2')
             return res.status(401).json({ message: "E-mail ou senha inválido" });
         }
-                   console.log(usuario)      
+        console.log(usuario)      
         const token = jwt.sign( // o jwt serve para autenticar o login do usuário.
             { idUsuario: usuario.idUsuario, email: usuario.email, permissao: usuario.Permissao},
             config.secret // o secret é a chave que encontra-se la em config.js

@@ -1,7 +1,9 @@
 const {DataTypes} = require('sequelize');
 const conexao = require('../database.js');
 
-const Usuario = conexao.define('usuarios', {
+
+const Usuario = conexao.define('usuarios',  
+{
 
     idUsuario: {
         primaryKey: true,
@@ -26,7 +28,6 @@ const Usuario = conexao.define('usuarios', {
     createdAt: false,
     updatedAt: false
 });
-
 
 
 module.exports = Usuario

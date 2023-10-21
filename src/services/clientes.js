@@ -27,9 +27,12 @@ class servicoClientes {
         return repositorio.ConsultarTodos();
     }
 
-    async Create(cliente) {
+    async Create(cliente, usuario) {
+        const RepoUsuario = await repositorio.Create(usuario);
         this.VerificarCliente(cliente);
-        return repositorio.Create(cliente);
+        const RepoCliente = await repositorio.Create(cliente);
+        return {...RepoUsuario, ...RepoCliente }
+
     }
 
     async Update(idCliente, cliente) {

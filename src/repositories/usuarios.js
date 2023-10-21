@@ -18,23 +18,7 @@ class RepositorieUsuarios {
     async ConsultarTodos() {
         return Usuario.findAll();
     }
-
-    async Update(idUsuario, usuario) {
-        const result = await Usuario.update(usuario, {
-            where: {
-                idUsuario
-            }
-        })
-        console.log(result)
-        return result
-    }
-
-    // async Delete(idUsuario) {
-    //     return Usuario.destroy({
-    //         where: { idUsuario }
-    //     });
-    // }
-
+    
 }
 
 module.exports = RepositorieUsuarios

@@ -5,29 +5,30 @@ const bcrypt = require('bcrypt')
 
 class repositorioClientes {
     
-    async ConsultarUm(idCliente) {
+    async ConsultarUm(idCliente, transaction) {
         return Cliente.findOne({
             where: { idCliente }, 
-            include: [Cachorro]
-        });
+            include: [Cachorro],
+            include: [Usuario]
+        },
+        {transaction}
+        );
     }
 
     async ConsultarTodos() {
-        return Cliente.findAll();
+        return Cliente.findAll({
+            include: [Usuario]
+        });
     }
 
+    async Create(cliente, usuario, idUsuario, transaction) {
+        const resultUsuario = await Usuario.create(usuario, {transaction});
+        const resultCliente = await Cliente.create(cliente, {
+            where: {idUsuario}}, 
+            {transaction}       )
 
-    async Create(cliente, senha, usuario, transaction) {
-       
-        const result = await Cliente.create(cliente);
-        const hashSenha = await bcrypt.hash(senha, 10)
-
-        const result1 = await Usuario.create(
-            { ...usuario, senha: hashSenha },
-            {transaction}
-        )
-        return true
-        
+             
+        return {...resultCliente, ...resultUsuario};
     }
  
     async Update(idCliente, cliente) {
@@ -37,15 +38,23 @@ class repositorioClientes {
         return result;
     }
 
+    // async Update(idUsuario, usuario, transaction) {
+    //     const result = await Usuario.update(usuario, {
+    //         where: {idUsuario}},
+    //                {transaction}
+    //     )
+    // }
+
     async Delete(idCliente, idUsuario) {
         try {
-            const cliente =  Cliente.destroy({
+            Cliente.destroy({
                 where: { idCliente }
             })
-            const usuario =  Usuario.destroy({
+            Usuario.destroy({
                 where: { idUsuario }
             })
             return true
+
         } catch(error) {
             console.log(error)
             return false          
