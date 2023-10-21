@@ -27,12 +27,8 @@ class servicoClientes {
         return repositorio.ConsultarTodos();
     }
 
-    async Create(cliente, usuario) {
-        const RepoUsuario = await repositorio.Create(usuario);
-        this.VerificarCliente(cliente);
-        const RepoCliente = await repositorio.Create(cliente);
-        return {...RepoUsuario, ...RepoCliente }
-
+    async Create(cliente) {
+        return repositorio.Create(cliente);
     }
 
     async Update(idCliente, cliente) {
@@ -49,14 +45,6 @@ class servicoClientes {
 }
 
 module.exports = servicoClientes
-
-
-
-
-
-    
-       
-
 
 
 

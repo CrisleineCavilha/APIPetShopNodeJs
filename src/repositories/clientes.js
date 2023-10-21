@@ -21,30 +21,34 @@ class repositorioClientes {
         });
     }
 
-    async Create(cliente, usuario, idUsuario, transaction) {
-        const resultUsuario = await Usuario.create(usuario, {transaction});
-        const resultCliente = await Cliente.create(cliente, {
-            where: {idUsuario}}, 
-            {transaction}       )
+    async Create(cliente, transaction) {
+        const { dataValues: resultUsuario } = await Usuario.create({
+            email: cliente.email,
+            senha: await bcrypt.hash(cliente.senha, 10)
+        }, {transaction});
 
-             
-        return {...resultCliente, ...resultUsuario};
+        const { dataValues: resultCliente} = await Cliente.create(
+            { usuarioId: resultUsuario.id, nome: cliente.nome, telefone: cliente.telefone },
+            {transaction}
+        )             
+        return {...resultCliente, ...resultUsuario };
     }
  
-    async Update(idCliente, cliente) {
-        const result = await Cliente.update(cliente, {
-            where: {idCliente}
-        })
-        return result;
+    async Update(idCliente, cliente, transaction) {
+        const { dataValues: resultUsuario } = await Usuario.update({
+            email: cliente.email,
+            senha: await bcrypt.hash(cliente.senha, 10)},
+            {where: {idCliente}},
+            {transaction});
+
+        const { dataValues: resultCliente} = await Cliente.create(
+             {usuarioId: resultUsuario.id, nome: cliente.nome, telefone: cliente.telefone},
+             {where: {idCliente}},
+             {transaction}
+        )             
+        return {...resultCliente, ...resultUsuario };
     }
-
-    // async Update(idUsuario, usuario, transaction) {
-    //     const result = await Usuario.update(usuario, {
-    //         where: {idUsuario}},
-    //                {transaction}
-    //     )
-    // }
-
+    
     async Delete(idCliente, idUsuario) {
         try {
             Cliente.destroy({
@@ -66,9 +70,4 @@ class repositorioClientes {
 }
 
 module.exports = repositorioClientes
-
-
-
-
-
 

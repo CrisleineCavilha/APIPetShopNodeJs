@@ -34,10 +34,9 @@ class controllerClientes {
 
     async Create(req, res) {
         try {
-            const {usuario} = req.body;
             const resultCliente = await servico.Create(req.body.cliente);
             res.status(201).json({
-                message: { ...usuario, ...resultCliente}
+                message: { resultCliente }
             })
         } catch(error) {
             console.log(error);
